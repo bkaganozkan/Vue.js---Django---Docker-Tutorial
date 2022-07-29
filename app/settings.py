@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'core',
-    'administrator' # It has to be different from 'admin'. Conflict error appears.
+    'administrator', # It has to be different from 'admin'. Conflict error appears.
+    'ambassador',
+    'checkout'
 ]
 
 MIDDLEWARE = [
@@ -86,6 +88,16 @@ DATABASES = {
         'PASSWORD': 'root',
         'HOST': 'db',
         'PORT': 3306 # 'PORT': 3306 not 'PORT': '3306'
+    }
+}
+
+CACHES = {
+    "default" : {
+        "BACKEND" : "django_redis.cache.RedisCache",
+        "LOCATION" : "redis://redis:6379/0",
+        "OPTIONS" : {
+            "CLIENT_CLASS" : "django_redis.client.DefaultClient"
+        },
     }
 }
 
@@ -136,9 +148,15 @@ AUTH_USER_MODEL = 'core.User'
 
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDANTIALS = True
-
+CORS_ALLOW_CREDENTIALS = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_HOST = 'docker.for.windows.localhost'
+EMAIL_PORT = '1025'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_TLS = False
+
